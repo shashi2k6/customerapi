@@ -1,0 +1,11 @@
+{
+  "statusCode": 200,
+  "status": "OK",
+  "data": {
+    "id": "812e2132-cffa-4bb6-8d17-b13c16b2c9b3",
+    "firstName": "Isabella",
+    "lastName": "Baumfree",
+    "address": "1826 Truth Place, New York, NY 20127",
+    "phoneNumber": "309-555-1892"
+  }
+}
