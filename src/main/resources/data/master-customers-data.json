@@ -1,0 +1,30 @@
+[
+  {
+    "id":"41acbb7a-ebc8-40b7-8281-70635e3466b8",
+    "firstName":"Salvator",
+    "lastName":"Di'Mario",
+    "address":"45 Carver Ave, Midland, TX 70134",
+    "phoneNumber":"510-555-7863"
+  },
+  {
+    "id":"b8a504e8-7cbd-4a54-9a24-dc1832558162",
+    "firstName":"Qin",
+    "lastName":"Zhang",
+    "address":"1 Main Street, Topeka, KS 37891",
+    "phoneNumber":"510-555-2367"
+  },
+  {
+    "id":"a454f817-3534-43c4-9ceb-f285330693aa",
+    "firstName":"Hanaan",
+    "lastName":"Altalib",
+    "address":"1826 Truth Place, New York, NY, 20127",
+    "phoneNumber":"204-555-9753"
+  },
+  {
+    "id":"812e2132-cffa-4bb6-8d17-b13c16b2c9b3",
+    "firstName":"Isabella",
+    "lastName":"Baumfree",
+    "address":"1826 Truth Place, New York, NY 20127",
+    "phoneNumber":"309-555-1892"
+  }
+]

@@ -1,5 +1,6 @@
 package customer.application;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import customer.application.bean.Customer;
@@ -16,7 +17,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -51,13 +56,13 @@ class CustomerApplicationTests {
 	@Test
 	void test_getCustomers() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/customers"))
-				.andExpect(status().isOk()).andDo(print())
+				.andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.[*]").exists())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.[*]",hasSize(4)));
 	}
 
 	@Test
-	public void test_getCustomer_byID() {
+	public void test_getCustomerById() {
 		try {
 			mockMvc.perform(MockMvcRequestBuilders.get("/api/customer/b8a504e8-7cbd-4a54-9a24-dc1832558162"))
 					.andExpect(status().isOk()).andDo(print())
@@ -67,6 +72,33 @@ class CustomerApplicationTests {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	public void test_addCustomer() {
+		Customer customer = new Customer("Araminta","Ross","309-555-1370","1849 Harriet Ave, Auburn, NY 63102");
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.post("/api/addcustomer")
+					.content(asJsonString(customer))
+					.contentType(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk()).andDo(print())
+					.andExpect(MockMvcResultMatchers.jsonPath("$.").isNotEmpty());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	private List<Customer> getListOfAllCustomers() throws IOException {
+		ObjectMapper mapper;
+		String customersJsonPath = "src/main/data/master-customers-data.json";
+		List<Customer> customers;
+		mapper = new ObjectMapper();
+		File customersFile = new File(customersJsonPath);
+		customers = mapper.readValue(customersFile, new TypeReference<ArrayList<Customer>>() {});
+		return customers;
+	}
+
 
 	private static String asJsonString(final Object obj) {
 		try {
