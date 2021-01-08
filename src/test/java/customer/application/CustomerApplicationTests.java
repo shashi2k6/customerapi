@@ -24,11 +24,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 class CustomerApplicationTests {
 
-    ObjectMapper mapper;
-    ArrayList<Customer> customerList;
-    String customersJsonPath = "src/main/resources/data/customers.json"; // 4 customers
-    String customerJsonPath = "src/main/resources/data/existingCustomer.json"; // 1 customer
-    String newCustomerJsonPath = "src/main/resources/data/newCustomer.json"; // 1 customer
+    // ObjectMapper mapper;
+    // ArrayList<Customer> customerList;
+    // String customersJsonPath = "src/main/resources/data/customers.json"; // 4 customers
+    // String customerJsonPath = "src/main/resources/data/existingCustomer.json"; // 1 customer
+    // String newCustomerJsonPath = "src/main/resources/data/newCustomer.json"; // 1 customer
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -42,7 +43,7 @@ class CustomerApplicationTests {
 
     @BeforeEach
     void setUp() throws IOException {
-        initializeCustomersData();
+       // initializeCustomersData();
     }
 
     /**
@@ -102,24 +103,24 @@ class CustomerApplicationTests {
         return customers;
     }
 
-    private void initializeCustomersData() throws IOException {
+   /* private void initializeCustomersData() throws IOException {
         mapper = new ObjectMapper();
         File customersFile = new File(customersJsonPath);
         customerList = mapper.readValue(customersFile, new TypeReference<ArrayList<Customer>>() {
         });
-    }
+    }*/
 
-    private String getCustomerJsonString() throws IOException {
+  /*  private String getCustomerJsonString() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         File customerFile = new File(customerJsonPath);
         Customer customer = mapper.readValue(customerFile, Customer.class);
         return mapper.writeValueAsString(customer);
-    }
+    }*/
 
-    private String createCustomerJsonString() throws IOException {
+    /*private String createCustomerJsonString() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         File customerFile = new File(newCustomerJsonPath);
         Customer customer = mapper.readValue(customerFile, Customer.class);
         return mapper.writeValueAsString(customer);
-    }
+    }*/
 }
