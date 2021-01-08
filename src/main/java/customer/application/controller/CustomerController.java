@@ -35,9 +35,9 @@ public class CustomerController {
     }
 
     public Customer getCustomerById(String customerId) throws IOException {
-        List<Customer> customerList =  getListOfAllCustomers();
-        for(Customer customer : customerList){
-            if(customer.getId().equals(customerId)){
+        List<Customer> customerList = getListOfAllCustomers();
+        for (Customer customer : customerList) {
+            if (customer.getId().equals(customerId)) {
                 return customer;
             }
         }
@@ -51,7 +51,8 @@ public class CustomerController {
         List<Customer> customers;
         mapper = new ObjectMapper();
         File customersFile = new File(customersJsonPath);
-        customers = mapper.readValue(customersFile, new TypeReference<ArrayList<Customer>>() {});
+        customers = mapper.readValue(customersFile, new TypeReference<ArrayList<Customer>>() {
+        });
         return customers;
     }
 
@@ -61,11 +62,11 @@ public class CustomerController {
         String customersJsonPath = "src/main/data/master-customers-data.json";
         File customersFile = new File(customersJsonPath);
         try {
-            List<Customer> customerList =  getListOfAllCustomers();
+            List<Customer> customerList = getListOfAllCustomers();
             customerList.add(customer);
             String customerJson = mapper.writeValueAsString(customerList);
             Files.write(Paths.get(customersJsonPath), customerJson.getBytes(), StandardOpenOption.CREATE);
-        }catch (IOException e) {
+        } catch (IOException e) {
             //exception handling left as an exercise for the reader
         }
         return customer.getId();
