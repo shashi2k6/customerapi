@@ -56,6 +56,18 @@ class CustomerApplicationTests {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.[*]",hasSize(4)));
 	}
 
+	@Test
+	public void test_getCustomer_byID() {
+		try {
+			mockMvc.perform(MockMvcRequestBuilders.get("/api/customer/b8a504e8-7cbd-4a54-9a24-dc1832558162"))
+					.andExpect(status().isOk()).andDo(print())
+					.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
+					.andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static String asJsonString(final Object obj) {
 		try {
 			return new ObjectMapper().writeValueAsString(obj);
@@ -83,4 +95,6 @@ class CustomerApplicationTests {
 		Customer customer = mapper.readValue(customerFile, Customer.class);
 		return mapper.writeValueAsString(customer);
 	}
+
+
 }

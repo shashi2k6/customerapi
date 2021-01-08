@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import customer.application.bean.Customer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +18,21 @@ public class CustomerController {
     @RequestMapping("/api/customers")
     public ResponseEntity<List<Customer>> getCustomers() throws IOException {
         return new ResponseEntity<List<Customer>>(getListOfAllCustomers(), HttpStatus.OK);
+    }
+
+    @RequestMapping("/api/customer/{id}")
+    public ResponseEntity<Customer> getCustomer(@PathVariable("id") String customerId) throws IOException {
+        return new ResponseEntity<Customer>(getCustomerById(customerId), HttpStatus.OK);
+    }
+
+    public Customer getCustomerById(String customerId) throws IOException {
+        List<Customer> customerList =  getListOfAllCustomers();
+        for(Customer customer : customerList){
+            if(customer.getId().equals(customerId)){
+                return customer;
+            }
+        }
+        return null;
     }
 
     private List<Customer> getListOfAllCustomers() throws IOException {
