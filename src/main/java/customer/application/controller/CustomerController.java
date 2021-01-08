@@ -30,8 +30,8 @@ public class CustomerController {
     }
 
     @PostMapping("/api/addcustomer")
-    public ResponseEntity<String> addCustomer(@RequestBody Customer customer) throws IOException {
-        return new ResponseEntity<String>(createNewCustomer(customer), HttpStatus.OK);
+    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) throws IOException {
+        return new ResponseEntity<Customer>(customer, HttpStatus.OK);
     }
 
     public Customer getCustomerById(String customerId) throws IOException {
@@ -46,7 +46,6 @@ public class CustomerController {
 
     private List<Customer> getListOfAllCustomers() throws IOException {
         ObjectMapper mapper;
-        //String customersJsonPath = "src/main/data/master-customers-data.json";
         String customersJsonPath = "src/main/resources/data/customers.json"; // 4 customers
         List<Customer> customers;
         mapper = new ObjectMapper();
@@ -55,22 +54,4 @@ public class CustomerController {
         });
         return customers;
     }
-
-    public String createNewCustomer(Customer customer) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        String customersJsonPath = "src/main/data/master-customers-data.json";
-        File customersFile = new File(customersJsonPath);
-        try {
-            List<Customer> customerList = getListOfAllCustomers();
-            customerList.add(customer);
-            String customerJson = mapper.writeValueAsString(customerList);
-            Files.write(Paths.get(customersJsonPath), customerJson.getBytes(), StandardOpenOption.CREATE);
-        } catch (IOException e) {
-            //exception handling left as an exercise for the reader
-        }
-        return customer.getId();
-    }
-
-
 }

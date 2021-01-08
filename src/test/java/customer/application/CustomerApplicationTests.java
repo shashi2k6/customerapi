@@ -53,23 +53,29 @@ class CustomerApplicationTests {
     @Test
     void test_getCustomers() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/customers"))
-                .andExpect(status().isOk())
+                .andExpect(status().isOk()).andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]", hasSize(4)));
     }
 
+    /**
+     * Get customer by id.
+     */
+
     @Test
     public void test_getCustomerById() {
         try {
-            mockMvc.perform(MockMvcRequestBuilders.get("/api/customer/b8a504e8-7cbd-4a54-9a24-dc1832558162"))
+            mockMvc.perform(MockMvcRequestBuilders.get("/api/customer/812e2132-cffa-4bb6-8d17-b13c16b2c9b3"))
                     .andExpect(status().isOk()).andDo(print())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("812e2132-cffa-4bb6-8d17-b13c16b2c9b3"));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Add the new customer
+     */
     @Test
     public void test_addCustomer() {
         Customer customer = new Customer("Araminta", "Ross", "309-555-1370", "1849 Harriet Ave, Auburn, NY 63102");
@@ -79,7 +85,7 @@ class CustomerApplicationTests {
                     .content(asJsonString(customer))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk()).andDo(print())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.").isNotEmpty());
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
         } catch (Exception e) {
             e.printStackTrace();
         }
